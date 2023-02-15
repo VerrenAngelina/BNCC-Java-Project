@@ -1,0 +1,191 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+	
+	public Main() {
+	
+	Random rand = new Random();
+	ArrayList<String> arrName = new ArrayList<String>();
+	ArrayList<String> arrRole = new ArrayList<String>();
+	ArrayList<String> arrGender = new ArrayList<String>();
+	ArrayList<String> arrID = new ArrayList<String>();
+	
+	Scanner sc = new Scanner(System.in);
+	
+	int choose = 0, number, option = 0;
+	String name = null, gender = null, role = null, id;
+	char c1, c2;
+	
+	do {
+		System.out.println("PT. Mentol");
+		System.out.println("==========");
+		System.out.println("1. Input | 2. View | 3. Update | 4. Delete | 5. Exit");
+		
+		do {
+			System.out.print("Choose: ");
+			try {
+				choose = sc.nextInt();
+			} catch (Exception e) {
+				System.out.println("Input must be integer (number)");
+			}
+			sc.nextLine();
+
+		} while (choose < 1 || choose > 5);
+		if (choose == 1) {
+			System.out.println();
+
+			do {
+				System.out.print("Input Nama Karyawan(>3 Characters): ");
+				name = sc.nextLine();
+
+			} while (name.length() <= 3);
+
+			do {
+				System.out.print("Input Jenis Kelamin(Laki-laki || perempuan): ");
+				gender = sc.nextLine();
+
+			} while (!(gender.equals("Laki-laki") || gender.equals("perempuan")));
+
+			System.out.print("Input Jabatan(manager || admin || supervisor): ");
+
+			do {
+				role = sc.nextLine();
+			} while (!(role.equals("manager") || role.equals("admin") || role.equals("supervisor")));
+
+	        c1 = (char)(rand.nextInt(26) + 'A');
+	        c2 = (char)(rand.nextInt(26) + 'A');
+
+	        id = String.format("%c%c-%04d", c1, c2, rand.nextInt(10000));
+
+			arrName.add(name);
+			arrRole.add(role);
+			arrGender.add(gender);
+			arrID.add(id);
+			
+			System.out.println();
+		}
+
+		else if (choose == 2) {
+		    System.out.println();
+		    
+		    ArrayList<String> arrNameSorted = new ArrayList<String>(arrName);
+            Collections.sort(arrNameSorted, Collections.reverseOrder());
+
+		    System.out.println("|----|------------------|-------------------------|---------------|---------------|-------------|");
+		    System.out.printf("|%-4s|%-18s|%-25s|%-15s|%-15s|%-13s|\n", "No", "Kode Karyawan", "Nama Karyawan", "Jenis Kelamin", "Jabatan", "Gaji Karyawan");
+		    System.out.println("|----|------------------|-------------------------|---------------|---------------|-------------|");
+		    for (int i = 0; i < arrName.size(); i++) {
+		        int salary = 0;
+		        if (arrRole.get(i).equals("manager")) {
+		            salary = 8000000;
+		        } else if (arrRole.get(i).equals("supervisor")) {
+		            salary = 6000000;
+		        } else if (arrRole.get(i).equals("admin")) {
+		            salary = 4000000;
+		        }
+		        System.out.printf("| %2d |%-18s| %-23s | %-13s | %-13s | %,11d |%n", i + 1, arrID.get(i), arrName.get(i), arrGender.get(i), arrRole.get(i), salary);
+		    }
+		    System.out.println("|----|------------------|-------------------------|---------------|---------------|-------------|");
+		    System.out.println();
+
+		} else if (choose == 3) {
+			
+			System.out.println("");
+			
+			for (number = 0; number < arrName.size(); number++) {
+
+				System.out.println(number + 1);
+				System.out.println(arrID.get(number));
+				System.out.println(arrName.get(number));
+				System.out.println(arrRole.get(number));
+				System.out.println(arrGender.get(number));
+				System.out.println();
+			}
+			
+			System.out.println("Which employee do you want to update?");
+			
+			do {
+				System.out.print("Choose: ");
+				try {
+					option = sc.nextInt();
+				} catch (Exception e) {
+					System.out.println("Input must be integer");
+				}
+				sc.nextLine();
+			} while (option > arrName.size() || option < 1);
+			
+			do {
+				System.out.print("Input Nama Karyawan(>3 characters): ");
+				name = sc.nextLine();
+
+			} while (name.length() <= 3);
+
+			do {
+				System.out.print("Input Jenis Kelamin(Laki-laki || perempuan): ");
+				gender = sc.nextLine();
+
+			} while (!(gender.equals("Laki-laki") || gender.equals("perempuan")));
+
+			System.out.print("Input Jabatan(manager || admin || supervisor): ");
+
+			do {
+				role = sc.nextLine();
+			} while (!(role.equals("manager") || role.equals("admin") || role.equals("supervisor")));
+			
+			arrName.set(option-1, name);
+			arrRole.set(option-1, role);
+			arrGender.set(option-1, gender);
+			
+			
+			
+			
+		}
+
+		else if (choose == 4) {
+			
+			for (number = 0; number < arrName.size(); number++) {
+
+				System.out.println(number + 1);
+				System.out.println(arrID.get(number));
+				System.out.println(arrName.get(number));
+				System.out.println(arrRole.get(number));
+				System.out.println(arrGender.get(number));
+				System.out.println();
+			}
+			
+			System.out.println("Which employee do you want to delete?");
+			
+			do {
+				System.out.print("Choose: ");
+				try {
+					option = sc.nextInt();
+				} catch (Exception e) {
+					System.out.println("Input must be integer");
+				}
+				sc.nextLine();
+			} while (option > arrName.size() || option < 1);
+			
+			arrName.remove(option-1);
+			arrRole.remove(option-1);
+			arrGender.remove(option-1);
+			
+
+		} else {
+			System.exit(0);
+		} 
+	} while (choose != 5);
+	
+	
+	}
+	
+	
+	public static void main(String[] args) {
+		new Main();
+		
+
+	}
+
+}
